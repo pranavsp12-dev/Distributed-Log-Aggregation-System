@@ -5,19 +5,24 @@ import os
 import sys 
 from datetime import datetime
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
 AES_KEY = b"0123456789ABCDEF0123456789ABCDEF"   # EXACT same on server
 assert len(AES_KEY) == 32 # AES-256 requires a 32-byte key
 aesgcm = AESGCM(AES_KEY)
+
 SERVER_IP="127.0.0.1"
 SERVER_PORT=9999
 
 client_socket=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+
 # get real machine IP
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
 machine_ip = s.getsockname()[0] #get local ip
 s.close()
+
 log_levels = ["DEBUG", "INFO", "NOTICE", "WARNING", "ERROR", "CRITICAL", "ALERT", "EMERGENCY"]
+
 log_messages = {
     "DEBUG": [
         "Entering authentication module",
@@ -76,20 +81,21 @@ log_messages = {
         "Emergency shutdown initiated"
     ]
 }
-#machine_ids=["M1","M2","M3","M4","M5","M6","M7"]
+
 while True:
-    for _ in range(7):
-        #machine_id=random.choice(machine_ids)
+    for _ in range(50):   # steady load
         current_time=datetime.now()
         level=random.choice(log_levels)
         message=random.choice(log_messages[level])
+
         log_message={
-        "machine_ip":machine_ip,
-        "timestamp": time.time(),
-        "datetime" : current_time.strftime("%Y-%m-%d %H:%M:%S"),
-        "level":level,
-        "message":message
-    }
+            "machine_ip":machine_ip,
+            "timestamp": time.time(),
+            "datetime" : current_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "level":level,
+            "message":message
+        }
+
         plaintext = json.dumps(log_message).encode()
         nonce = os.urandom(12)
 
@@ -97,6 +103,7 @@ while True:
         packet = nonce + ciphertext
 
         client_socket.sendto(packet, (SERVER_IP, SERVER_PORT))
-        time.sleep(0.02)
-    time.sleep(1) #pauses client for 1 second before sending next log
 
+        time.sleep(0.02)   # controlled rate (not too fast)
+
+    time.sleep(0.1)   # small pause to keep system stable initially
