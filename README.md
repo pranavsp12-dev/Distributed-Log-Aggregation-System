@@ -1,97 +1,124 @@
 Distributed Log Aggregation System
+
 Project Overview
 
 This project implements a Distributed Log Aggregation System using UDP communication and AES-GCM encryption.
 
-Multiple simulated client machines generate encrypted logs and send them to a centralized server. The server decrypts, buffers, sorts the logs by timestamp, and calculates throughput.
+Multiple client machines (simulated using different IP addresses) generate encrypted logs and send them to a centralized server. The server decrypts, buffers, sorts logs based on timestamps, and calculates throughput.
+
+A Streamlit dashboard is also included to analyze logs in real time.
+
+---
 
 Features
 
-a. UDP-based communication
+- UDP-based communication
+- AES-GCM (256-bit) encryption
+- Unique 12-byte nonce per message
+- Log batching and buffering
+- Timestamp-based sorting
+- Real-time throughput calculation
+- Buffer overflow detection and failure simulation
+- Automatic server recovery
+- Multi-client simulation
+- Logs tagged with real machine IP addresses
+- Streamlit-based log analysis dashboard
 
-b. AES-GCM (256-bit) encryption
-
-c. Unique 12-byte nonce per message
-
-d. Log batching (20 logs per batch)
-
-e. Timestamp-based sorting
-
-f. Real-time throughput calculation
-
-g. Buffer overflow protection
-
-h. Simulated multiple machines
+---
 
 Technologies Used
 
-Python
+- Python
+- Socket Programming (UDP)
+- JSON
+- Cryptography Library (AES-GCM)
+- Streamlit
+- Pandas
+- Matplotlib
 
-Socket Programming (UDP)
+---
 
-JSON
+Project Structure
 
-Cryptography Library (AES-GCM)
+distributed-log-aggregation-system/
 
-distributed-log-aggregation/
-│
-├── client.py
-├── server.py
-├── requirements.txt
-└── README.md
+client.py        Simulates multiple log-generating machines  
+server.py        Receives, decrypts, buffers, and processes logs  
+app.py           Streamlit dashboard for log analysis  
+logs.json        Generated log data (not tracked in Git)  
+requirements.txt  
+README.md  
+
+---
 
 Installation
-1. Clone the Repository
-    git clone https://github.com/your-username/distributed-log-aggregation.git
-    cd distributed-log-aggregation
 
-2.Install Dependencies
-    pip install -r requirements.txt
+1. Clone the repository
+
+git clone https://github.com/pranavsp12-dev/Distributed-Log-Aggregation-System.git  
+cd Distributed-log-aggregation-system  
+
+2. Install dependencies
+
+pip install -r requirements.txt  
+
+---
 
 How to Run
+
 Step 1: Start the Server
 
-Open a terminal and run: python server.py
+python server.py  
 
 Step 2: Start the Client
 
-Open another terminal and run: python client.py
+python client.py  
+
+Step 3: Run the Dashboard
+
+streamlit run app.py  
+
+---
 
 Example Output
-UDP Server listening on 0.0.0.0:9999
 
-[M2] 2026-02-25 10:14:01 (Tuesday) INFO - Service started successfully
-[M4] 2026-02-25 10:14:01 (Tuesday) WARNING - High memory usage detected
-[M1] 2026-02-25 10:14:01 (Tuesday) DEBUG - Parsing configuration file
-[M6] 2026-02-25 10:14:02 (Tuesday) ERROR - Database connection failed
-[M3] 2026-02-25 10:14:02 (Tuesday) NOTICE - Cache refreshed successfully
-[M5] 2026-02-25 10:14:02 (Tuesday) ALERT - Unauthorized access attempt detected
-[M7] 2026-02-25 10:14:03 (Tuesday) CRITICAL - Service unavailable
-[M2] 2026-02-25 10:14:03 (Tuesday) EMERGENCY - System unusable
+UDP Server listening on 0.0.0.0:9999  
 
-The throughput is 50.12 logs/sec
+[192.168.29.40] 16:46:52.157 INFO - Service started successfully  
+[192.168.29.41] 16:46:52.178 WARNING - High memory usage detected  
+[192.168.29.42] 16:46:52.199 DEBUG - Parsing configuration file  
+[192.168.29.43] 16:46:52.220 ERROR - Database connection failed  
+[192.168.29.44] 16:46:52.241 NOTICE - Cache refreshed successfully  
+[192.168.29.45] 16:46:52.262 ALERT - Unauthorized access attempt detected  
+[192.168.29.46] 16:46:52.283 CRITICAL - Service unavailable  
+[192.168.29.47] 16:46:52.304 EMERGENCY - System unusable  
+
+The throughput is 50.12 logs/sec  
+
+---
 
 Security
 
-Logs are encrypted using AES-GCM (256-bit key) which provides:
-
-Confidentiality
-
-Integrity
-
-Authentication
+Logs are encrypted using AES-GCM with a 256-bit key, which provides confidentiality, integrity, and authentication.
 
 Each log message uses a unique 12-byte nonce to ensure secure encryption.
 
+---
+
 Team Members
-NAME- PRANAV SP
-SRN-  PES1UG24CS337
 
-NAME-RAMITH MUNNAN RAVINDRANATH
-SRN-PES1UG24CS367
+Pranav SP  
+SRN: PES1UG24CS337  
 
-NAME-Ojas Binjola
-SRN-PES1UG24CS307
+Ramith Munnan Ravindranath  
+SRN: PES1UG24CS367  
 
-COURSE NAME -Computer Networks
-COURSE CODE- UE24CS252B 
+Ojas Binjola  
+SRN: PES1UG24CS307  
+
+---
+
+Course Details
+
+Course Name: Computer Networks  
+Course Code: UE24CS252B  
