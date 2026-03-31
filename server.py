@@ -76,7 +76,7 @@ def run_server():
 
             print(f"The throughput is {throughput:.2f} logs/sec\n")
 
-            log_buffer = log_buffer[2:]
+            log_buffer = log_buffer[5:]
 
         # TIME-BASED FAILURE (but message says buffer overflow)
         if start_time is not None and time.time() - start_time > FAIL_AFTER:
