@@ -78,7 +78,7 @@ def run_server():
 
             log_buffer = log_buffer[5:]
 
-        # TIME-BASED FAILURE (but message says buffer overflow)
+        #  BUffer overflow (more than 20 logs in the buffer)
         if start_time is not None and time.time() - start_time > FAIL_AFTER:
             print("Failure: Buffer overflow due to high incoming log rate")
 
